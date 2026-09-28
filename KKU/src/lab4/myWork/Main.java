@@ -1,106 +1,60 @@
 package lab4.myWork;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Employee> employees = new ArrayList<>();
+        HumanResources hr = new HumanResources();
 
         while (true) {
-            System.out.println("\n--- Employee Menu ---");
-            System.out.println("1. Enter Employee Info");
+            System.out.println("\n--- HR System Menu ---");
+            System.out.println("1. Add Employee");
             System.out.println("2. Display All Employees");
-            System.out.println("3. Update Bonus or Salary");
+            System.out.println("3. Update Employee Bonus");
             System.out.println("4. Exit");
             System.out.print("Choose an option: ");
-
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter Employee Info:");
-                    System.out.print("Name: ");
+                    System.out.print("Enter Name: ");
                     String name = scanner.nextLine();
-
-                    System.out.print("ID: ");
+                    System.out.print("Enter ID: ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-
-                    System.out.print("Role: ");
+                    System.out.print("Enter Role: ");
                     String role = scanner.nextLine();
-
-                    System.out.print("Salary: ");
+                    System.out.print("Enter Basic Salary: ");
                     double salary = scanner.nextDouble();
-
-                    System.out.print("Bonus: ");
+                    System.out.print("Enter Bonus: ");
                     double bonus = scanner.nextDouble();
                     scanner.nextLine();
 
-                    Employee emp = new Employee(name, id, role, salary);
-                    emp.setBonus(bonus);
-                    employees.add(emp);
-
-                    System.out.println("Employee added.");
+                    Employee emp = new Employee(name, id, role, salary, bonus);
+                    hr.addEmployee(emp);
                     break;
 
                 case 2:
-                    System.out.println("\n--- Employee Info ---");
-                    if (employees.isEmpty()) {
-                        System.out.println("No employees entered yet.");
-                    } else {
-                        for (Employee e : employees) {
-                            e.displayDetails();
-                            System.out.println("----------------------");
-                        }
-                    }
+                    hr.displayAllEmployees();
                     break;
 
                 case 3:
-                    System.out.print("Enter employee ID to update: ");
+                    System.out.print("Enter Employee ID: ");
                     int updateId = scanner.nextInt();
-                    scanner.nextLine();
-                    boolean updated = false;
-
-                    for (Employee e : employees) {
-                        if (e.getEmployeeId() == updateId) {
-                            System.out.println("1. Update Salary");
-                            System.out.println("2. Update Bonus");
-                            int updateChoice = scanner.nextInt();
-                            scanner.nextLine();
-
-                            if (updateChoice == 1) {
-                                System.out.print("New Salary: ");
-                                double newSalary = scanner.nextDouble();
-                                scanner.nextLine();
-                                e.setBasicSalary(newSalary);
-                                System.out.println("Salary updated.");
-                            } else if (updateChoice == 2) {
-                                System.out.print("New Bonus: ");
-                                double newBonus = scanner.nextDouble();
-                                scanner.nextLine();
-                                e.setBonus(newBonus);
-                                System.out.println("Bonus updated.");
-                            }
-                            updated = true;
-                            break;
-                        }
-                    }
-
-                    if (!updated) {
-                        System.out.println("Employee ID not found.");
-                    }
+                    System.out.print("Enter New Bonus: ");
+                    double newBonus = scanner.nextDouble();
+                    hr.updateBonus(updateId, newBonus);
                     break;
 
                 case 4:
-                    System.out.println("Exiting program. Goodbye!");
+                    HumanResources.logAction("Exiting system. Goodbye!");
                     scanner.close();
                     return;
 
                 default:
-                    System.out.println("Invalid option. Try again.");
+                    HumanResources.logAction("Invalid option. Try again.");
             }
         }
     }
