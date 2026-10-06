@@ -15,7 +15,7 @@ public class Main {
             System.out.println("4. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -32,16 +32,16 @@ public class Main {
                     System.out.print("Enter Role: ");
                     String role = scanner.nextLine();
                     
-                    // هنا التعديل الجوهري لـ Lab 6
+                    
                     System.out.print("Enter Basic Salary (Enter 0 if Student Trainee): ");
                     double salary = scanner.nextDouble();
 
                     if (salary == 0) {
-                        // إنشاء طالب تدريب مجاني (Student)
+                        
                         Student std = new Student(name, age, id, role);
                         hr.addEmployee(std);
                     } else {
-                        // إنشاء موظف عادي براتب (Employee)
+                        
                         System.out.print("Enter Bonus: ");
                         double bonus = scanner.nextDouble();
                         Employee emp = new Employee(name, age, id, role, salary, bonus);
@@ -59,7 +59,7 @@ public class Main {
                     System.out.print("Enter New Bonus: ");
                     double newBonus = scanner.nextDouble();
                     
-                    // كلاس HR سيمنع التحديث تلقائياً إذا كان الشخص طالب تدريب
+                    
                     hr.updateBonus(updateId, newBonus);
                     break;
 
