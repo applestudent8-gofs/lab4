@@ -1,6 +1,6 @@
 package lab4.myWork;
 
-public class Employee {
+public class Employee extends Person {
     private String name;
     private int employeeId;
     private String role;
