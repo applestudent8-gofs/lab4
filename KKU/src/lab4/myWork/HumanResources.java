@@ -1,6 +1,6 @@
 package lab4.myWork;
 
-public class HumanResources {
+public final class HumanResources {
     // 3 Employee fields (Max capacity = 3) as required without using arrays
     private Employee emp1 = null;
     private Employee emp2 = null;
