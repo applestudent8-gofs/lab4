@@ -8,7 +8,7 @@ public class Main {
         HumanResources hr = new HumanResources();
 
         while (true) {
-            System.out.println("\n--- Lab 6 HR System ---");
+            System.out.println("\n--- Lab 7 HR System ---");
             System.out.println("1. Add Person (Employee / Student)");
             System.out.println("2. Display All Records");
             System.out.println("3. Update Bonus");
@@ -21,30 +21,28 @@ public class Main {
                 case 1:
                     System.out.print("Enter Name: ");
                     String name = scanner.nextLine();
-                    
+
                     System.out.print("Enter Age: ");
                     int age = scanner.nextInt();
-                    
+
                     System.out.print("Enter ID: ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-                    
+
                     System.out.print("Enter Role: ");
                     String role = scanner.nextLine();
-                    
-                    
+
                     System.out.print("Enter Basic Salary (Enter 0 if Student Trainee): ");
                     double salary = scanner.nextDouble();
 
                     if (salary == 0) {
-                        
                         Student std = new Student(name, age, id, role);
                         hr.addEmployee(std);
                     } else {
-                        
                         System.out.print("Enter Bonus: ");
                         double bonus = scanner.nextDouble();
                         Employee emp = new Employee(name, age, id, role, salary, bonus);
+                        emp.currency = new USDollar();
                         hr.addEmployee(emp);
                     }
                     break;
@@ -58,8 +56,6 @@ public class Main {
                     int updateId = scanner.nextInt();
                     System.out.print("Enter New Bonus: ");
                     double newBonus = scanner.nextDouble();
-                    
-                    
                     hr.updateBonus(updateId, newBonus);
                     break;
 
