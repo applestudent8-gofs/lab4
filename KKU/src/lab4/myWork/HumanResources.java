@@ -1,16 +1,23 @@
 package lab4.myWork;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public final class HumanResources {
-    private Employee emp1 = null;
-    private Employee emp2 = null;
+    private List<Employee> employees = new ArrayList<>();
 
     static void logAction(String action) {
         System.out.println("[LOG]: " + action);
     }
 
     protected boolean isEmployeeExists(int employeeId) {
-        if (emp1 != null && emp1.getEmployeeId() == employeeId) return true;
-        if (emp2 != null && emp2.getEmployeeId() == employeeId) return true;
+        for (Employee e : employees) {
+            if (e.getEmployeeId() == employeeId) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -19,49 +26,57 @@ public final class HumanResources {
             logAction("ID " + employee.getEmployeeId() + " already exists!");
             return false;
         }
+        employees.add(employee);
+        logAction("Added successfully.");
+        return true;
+    }
 
-        if (emp1 == null) {
-            emp1 = employee;
-            logAction("Added to Slot 1 as: " + (employee instanceof Student ? "Student" : "Employee"));
-            return true;
-        } else if (emp2 == null) {
-            emp2 = employee;
-            logAction("Added to Slot 2 as: " + (employee instanceof Student ? "Student" : "Employee"));
-            return true;
-        } else {
-            logAction("System full! Cannot add more.");
-            return false;
+    public boolean removeEmployee(int employeeId) {
+        for (Employee e : employees) {
+            if (e.getEmployeeId() == employeeId) {
+                employees.remove(e);
+                logAction("Employee removed successfully.");
+                return true;
+            }
         }
+        logAction("ID not found.");
+        return false;
     }
 
     public boolean updateBonus(int employeeId, double bonus) {
-        Employee target = null;
-        if (emp1 != null && emp1.getEmployeeId() == employeeId) target = emp1;
-        if (emp2 != null && emp2.getEmployeeId() == employeeId) target = emp2;
-
-        if (target != null) {
-            
-            if (target instanceof Student) {
-                logAction("Cannot update bonus for Student trainees (Unpaid)!");
-                return false;
+        for (Employee e : employees) {
+            if (e.getEmployeeId() == employeeId) {
+                if (e instanceof Student) {
+                    logAction("Cannot update bonus for Student trainees!");
+                    return false;
+                }
+                e.setBonus(bonus);
+                logAction("Bonus updated.");
+                return true;
             }
-            target.setBonus(bonus);
-            logAction("Bonus updated for Employee ID: " + employeeId);
-            return true;
         }
-
-        logAction("ID " + employeeId + " not found.");
+        logAction("ID not found.");
         return false;
     }
 
     public void displayAllEmployees() {
         logAction("Displaying all records:");
-        boolean empty = true;
-        if (emp1 != null) { emp1.displayDetails(); empty = false; }
-        if (emp2 != null) { emp2.displayDetails(); empty = false; }
-
-        if (empty) {
+        if (employees.isEmpty()) {
             System.out.println("No records found.");
+            return;
+        }
+
+        Map<String, Integer> roleCounts = new HashMap<>();
+
+        for (Employee e : employees) {
+            e.displayDetails();
+            String role = e.getRole();
+            roleCounts.put(role, roleCounts.getOrDefault(role, 0) + 1);
+        }
+
+        System.out.println("\n--- Role Counts ---");
+        for (Map.Entry<String, Integer> entry : roleCounts.entrySet()) {
+            System.out.println("Role: " + entry.getKey() + " | Count: " + entry.getValue());
         }
     }
 }
