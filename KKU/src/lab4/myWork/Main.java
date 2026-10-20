@@ -8,11 +8,12 @@ public class Main {
         HumanResources hr = new HumanResources();
 
         while (true) {
-            System.out.println("\n--- Lab 7 HR System ---");
+            System.out.println("\n--- Lab 8 HR System ---");
             System.out.println("1. Add Person (Employee / Student)");
-            System.out.println("2. Display All Records");
+            System.out.println("2. Display All Records & Role Counts");
             System.out.println("3. Update Bonus");
-            System.out.println("4. Exit");
+            System.out.println("4. Remove Employee by ID");
+            System.out.println("5. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -60,6 +61,12 @@ public class Main {
                     break;
 
                 case 4:
+                    System.out.print("Enter ID to remove: ");
+                    int removeId = scanner.nextInt();
+                    hr.removeEmployee(removeId);
+                    break;
+
+                case 5:
                     HumanResources.logAction("Exiting program... Goodbye!");
                     scanner.close();
                     return;
